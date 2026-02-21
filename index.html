@@ -1,114 +1,167 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>seniiichikuun's Portal</title>
+    <title>SENIIICHIKUUN PORTAL</title>
     <style>
-        /* 全体の背景：グラデーションを動かす */
-        body { 
-            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000000);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            color: white; 
-            font-family: 'Segoe UI', sans-serif; 
-            text-align: center; 
+        /* 基本設定 */
+        body {
             margin: 0;
-            padding: 50px 20px; 
+            padding: 0;
+            background-color: #000; /* 真っ黒 */
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* マトリックス背景用のキャンバス */
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
-        h1 { 
-            font-size: 2.5rem;
-            color: #fff;
-            text-shadow: 0 0 20px #ffce00, 0 0 30px #ffce00;
+        h1 {
+            margin-top: 50px;
+            font-size: 2rem;
+            text-shadow: 0 0 20px #0f0;
+            letter-spacing: 5px;
+        }
+
+        .subtitle {
+            color: #0f0;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        /* カード全体のコンテナ */
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1000px;
+        }
+
+        /* ガラス風のカードデザイン */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            width: 280px;
+            padding: 25px;
+            text-decoration: none;
+            color: white;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #0f0;
+            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
             margin-bottom: 10px;
         }
 
-        .menu-container { 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: 25px; 
-            margin-top: 40px; 
-        }
-
-        /* カード：光の反射と影 */
-        .card { 
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px); /* すりガラス効果 */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            width: 280px; 
-            padding: 30px; 
-            transition: 0.4s; 
-            text-decoration: none; 
-            color: white;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        /* ホバー時に光らせる */
-        .card:hover { 
-            transform: translateY(-15px) scale(1.05); 
-            border-color: #ffce00;
-            box-shadow: 0 15px 50px rgba(255, 206, 0, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* 公開中バッジ */
-        .badge { 
-            display: inline-block;
-            padding: 4px 12px; 
-            border-radius: 50px; 
-            font-size: 12px; 
-            font-weight: bold; 
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
         h2 { margin: 10px 0; font-size: 22px; }
-        p { font-size: 14px; color: #bbb; line-height: 1.5; }
+        p { font-size: 14px; color: #ccc; line-height: 1.5; }
 
+        /* 「次を待て」用の暗いカード */
+        .coming-soon {
+            opacity: 0.5;
+            filter: grayscale(1);
+            cursor: default;
+        }
     </style>
 </head>
 <body>
 
-    <h1>🎮 SENIIICHIKUUN PORTAL</h1>
-    <p style="color: #888;">Next Generation Content Hub</p>
+    <canvas id="matrix"></canvas>
+
+    <h1>🎮 SENIIICHIKUUN</h1>
+    <p class="subtitle">Next Generation Content Hub</p>
 
     <div class="menu-container">
+
         <a href="https://seniiichikuun.github.io/minecraft-shindan/" class="card">
-            <span class="badge" style="background: #ffce00; color: #000;">Live Now</span>
+            <span class="badge" style="background: #ffce00; color: black;">Classic</span>
             <h2>Minecraft Style</h2>
             <p>君のプレイスタイルを精密に分析する、至高の診断ツール。</p>
         </a>
 
         <a href="https://seniiichikuun.github.io/psycho-test/" class="card">
-            <span class="badge" style="background: #ff416c; color: white;">Dark Mode</span>
+            <span class="badge" style="background: #ff416c;">Danger</span>
             <h2>Psychopath Test</h2>
             <p>深層心理に隠された「真の顔」を暴く。閲覧注意の体験を。</p>
         </a>
+
         <a href="https://seniiichikuun.github.io/hero-test/" class="card">
             <span class="badge" style="background: #4a90e2;">NEW</span>
             <h2>Hero Style</h2>
             <p>君がファンタジーの世界に行ったら？隠れた勇者の才能を診断！</p>
         </a>
 
-        <div class="card" style="opacity: 0.5; filter: grayscale(0.8);">
-            <span class="badge" style="background: #555;">Next</span>
+        <div class="card coming-soon">
+            <span class="badge" style="background: #555;">Next Project</span>
             <h2>次を待て...</h2>
             <p>新プロジェクト極秘進行中。アップデートをお楽しみに！</p>
         </div>
 
     </div>
 
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()";
+        const charArray = chars.split("");
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) drops[x] = 1;
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0F0";
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 33);
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>
