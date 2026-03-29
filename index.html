@@ -5,32 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diag. | 診断ポータル</title>
     <style>
-        /* 清潔感のあるアプリ風デザイン */
         :root { --main: #007aff; --bg: #f2f2f7; }
-        body { margin: 0; background: var(--bg); color: #1c1c1e; font-family: sans-serif; }
-        header { background: #fff; padding: 15px; border-bottom: 1px solid #d1d1d6; text-align: center; position: sticky; top: 0; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--main); }
+        body { margin: 0; background: var(--bg); color: #1c1c1e; font-family: sans-serif; -webkit-tap-highlight-color: transparent; }
+        header { background: #fff; padding: 15px; border-bottom: 1px solid #d1d1d6; text-align: center; position: sticky; top: 0; z-index: 10; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--main); letter-spacing: -1px; }
         .container { max-width: 500px; margin: 0 auto; padding: 15px; }
 
-        /* 診断リスト */
+        /* カードデザイン */
         .card {
-            background: #fff; border-radius: 12px; padding: 15px; margin-bottom: 12px;
+            background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px;
             display: flex; align-items: center; cursor: pointer; border: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: 0.1s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.2s;
         }
-        .card:active { transform: scale(0.97); background: #f9f9f9; }
-        .icon { width: 60px; height: 60px; background: #e5e5ea; border-radius: 10px; margin-right: 15px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; }
-        .info h2 { margin: 0; font-size: 1rem; }
-        .info p { margin: 4px 0 0; font-size: 0.8rem; color: #8e8e93; }
-        .hot { display: inline-block; background: #ff3b30; color: #fff; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; margin-top: 5px; font-weight: bold; }
+        .card:active { transform: scale(0.96); background: #f9f9f9; }
+        .icon { width: 70px; height: 70px; background: #eff6ff; border-radius: 12px; margin-right: 15px; font-size: 2rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .info h2 { margin: 0; font-size: 1rem; color: #000; }
+        .info p { margin: 4px 0 0; font-size: 0.8rem; color: #8e8e93; line-height: 1.4; }
+        .hot { display: inline-block; background: #ff3b30; color: #fff; font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; margin-top: 8px; font-weight: bold; }
 
-        /* 診断中画面 */
-        #quiz { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 100; flex-direction: column; padding: 40px 20px; box-sizing: border-box; text-align: center; }
-        .q-text { font-size: 1.4rem; font-weight: bold; margin: 40px 0; }
-        .btns { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-        .btn { padding: 18px; border-radius: 12px; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
-        .yes { background: var(--main); color: #fff; }
-        .no { background: #e5e5ea; color: #000; }
+        /* 診断オーバーレイ */
+        #quiz-ui { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 100; flex-direction: column; padding: 40px 20px; box-sizing: border-box; }
+        .progress { color: var(--main); font-weight: bold; font-size: 0.9rem; margin-bottom: 10px; text-align: center; }
+        .q-text { font-size: 1.3rem; font-weight: 800; margin: 30px 0 50px; text-align: center; line-height: 1.5; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+        .btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 400px; margin: 0 auto; }
+        .btn { padding: 20px; border-radius: 16px; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.1s; }
+        .btn-yes { background: var(--main); color: #fff; }
+        .btn-no { background: #e5e5ea; color: #000; }
+        
+        /* 結果画面 */
+        .result-title { font-size: 0.9rem; color: #888; margin-bottom: 5px; }
+        .result-name { font-size: 1.8rem; font-weight: 900; color: var(--main); margin-bottom: 20px; }
+        .result-desc { font-size: 1rem; color: #444; line-height: 1.6; background: #f8f9fa; padding: 20px; border-radius: 12px; }
+        .back-btn { margin-top: 30px; background: #333; color: #fff; }
     </style>
 </head>
 <body>
@@ -38,57 +44,84 @@
 <header><div class="logo">Diag.</div></header>
 
 <div class="container">
-    <div class="card" onclick="start('zense')">
-        <div class="icon">🧞‍♂️</div>
+    <div class="card" onclick="startQuiz('zense')">
+        <div class="icon">🏴‍☠️</div>
         <div class="info">
             <h2>あなたの「前世タイプ」診断！！</h2>
-            <p>性格から魂のルーツを特定。</p>
-            <span class="hot">人気 🔥</span>
+            <p>魂に刻まれた記憶を呼び覚まし、あなたのルーツを特定します。</p>
+            <span class="hot">RANKING 1位 🔥</span>
         </div>
     </div>
-    <div class="card" onclick="start('tsun')">
+    <div class="card" onclick="startQuiz('tsun')">
         <div class="icon">🎀</div>
         <div class="info">
-            <h2>ツンデレ比率診断</h2>
-            <p>素直になれない心の割合を数値化。</p>
+            <h2>あなたのツンデレ比率診断</h2>
+            <p>素直になれない心の割合をAIが精密に可視化します。</p>
+            <span class="hot">注目度 急上昇 ⚡</span>
         </div>
     </div>
 </div>
 
-<div id="quiz">
-    <div id="q-num" style="color: var(--main); font-weight: bold;">Q.1</div>
-    <div id="q-text" class="q-text">質問</div>
-    <div class="btns">
-        <button class="btn yes" onclick="answer(true)">はい</button>
-        <button class="btn no" onclick="answer(false)">いいえ</button>
+<div id="quiz-ui">
+    <div id="quiz-content" style="display: contents;">
+        <div class="progress" id="p-count">Q.1 / 5</div>
+        <div class="q-text" id="q-text">質問を読み込んでいます...</div>
+        <div class="btns">
+            <button class="btn btn-yes" onclick="handleAnswer(true)">はい</button>
+            <button class="btn btn-no" onclick="handleAnswer(false)">いいえ</button>
+        </div>
+    </div>
+    <div id="result-content" style="display: none; text-align: center; flex-direction: column; justify-content: center; height: 100%;">
+        <div class="result-title">診断結果</div>
+        <div class="result-name" id="res-name">結果名</div>
+        <div class="result-desc" id="res-desc">解説文</div>
+        <button class="btn back-btn" onclick="location.reload()">トップに戻る</button>
     </div>
 </div>
 
 <script>
-    const data = {
-        zense: { q: ["直感を信じる？", "一人が好き？", "歴史が好き？", "運が良い方？", "冒険したい？"] },
-        tsun: { q: ["褒められると照れる？", "素直になれない？", "実は甘えん坊？", "怒りっぽい？", "ギャップがある？"] }
-    };
-    let cur = null, step = 0, score = 0;
-    function start(t) {
-        cur = data[t]; step = 0; score = 0;
-        document.getElementById('quiz').style.display = 'flex';
-        render();
-    }
-    function render() {
-        document.getElementById('q-num').innerText = "Q." + (step + 1);
-        document.getElementById('q-text').innerText = cur.q[step];
-    }
-    function answer(v) {
-        if(v) score++;
-        step++;
-        if(step < 5) render();
-        else {
-            alert("診断結果: タイプ" + score + "\n詳細ロジックは作成中です！");
-            document.getElementById('quiz').style.display = 'none';
+    const db = {
+        zense: {
+            qs: ["海や冒険に憧れる？", "直感で動くタイプだ？", "歴史ドラマやファンタジーが好き？", "目立つのは嫌いじゃない？", "ルールに縛られるのは嫌だ？"],
+            results: [
+                { n: "平安貴族", d: "あなたは穏やかで風流な魂の持ち主。前世では和歌を詠みながら静かな時間を過ごしていたようです。" },
+                { n: "魔女・魔術師", d: "あなたは鋭い直感と知恵の持ち主。前世では不思議な力で人々を導く存在だったかもしれません。" },
+                { n: "海賊", d: "あなたは自由奔放で勇敢な魂。前世では荒波を越えて未知の宝を探す冒険者だった可能性が高いです！" }
+            ]
+        },
+        tsun: {
+            qs: ["褒められると照れ隠しで怒る？", "好きな人ほど冷たくしちゃう？", "本当は甘えん坊だと思う？", "素直になれなくて後悔することがある？", "「ギャップがある」と言われる？"],
+            results: [
+                { n: "ピュア度100%", d: "あなたは裏表のない超素直タイプ。ツンデレ要素はほぼゼロ。天使のような性格です。" },
+                { n: "隠れツンデレ", d: "普段はクールですが、心の中は熱いタイプ。親しい人にだけ見せるデレが破壊的です。" },
+                { n: "王道ツンデレ", d: "これぞツンデレ！という黄金比率。素直になれない不器用さが、あなたの最大の魅力です。" }
+            ]
         }
+    };
+
+    let mode = "", step = 0, score = 0;
+    function startQuiz(t) {
+        mode = t; step = 0; score = 0;
+        document.getElementById('quiz-ui').style.display = 'flex';
+        showNext();
+    }
+    function showNext() {
+        document.getElementById('p-count').innerText = `Q.${step + 1} / 5`;
+        document.getElementById('q-text').innerText = db[mode].qs[step];
+    }
+    function handleAnswer(ans) {
+        if(ans) score++;
+        step++;
+        if(step < 5) showNext();
+        else showResult();
+    }
+    function showResult() {
+        document.getElementById('quiz-content').style.display = 'none';
+        document.getElementById('result-content').style.display = 'flex';
+        let resIdx = score >= 4 ? 2 : (score >= 2 ? 1 : 0);
+        document.getElementById('res-name').innerText = db[mode].results[resIdx].n;
+        document.getElementById('res-desc').innerText = db[mode].results[resIdx].d;
     }
 </script>
-
 </body>
 </html>
