@@ -4,49 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Diag.Lab - あなたの将来のモテ期や前世をAIが精密診断。SNSで話題の恋愛診断ポータルサイト。">
-    <meta name="keywords" content="診断, 恋愛診断, モテ期, 前世診断, ツンデレ診断, Diag.Lab">
-    <meta property="og:title" content="Diag.Lab | 究極の診断ポータル">
-    <meta property="og:description" content="一生で何人に告白されるか、あなたの運命を今すぐチェック！">
-    <meta name="robots" content="index, follow">
     <title>Diag.Lab | 究極の診断ポータル</title>
     <style>
         :root { --main: #007aff; --bg: #fdf2f5; } 
         body { margin: 0; padding: 0; background: var(--bg); color: #1c1c1e; font-family: sans-serif; -webkit-tap-highlight-color: transparent; }
-        
-        /* ヘッダー：青背景、白文字ロゴ */
         header { background: var(--main); padding: 15px; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 10; }
         .logo { font-size: 1.5rem; font-weight: 900; color: #fff; }
         
-        /* 紹介文エリア：青背景、白文字 */
-        .intro-box { background: var(--main); padding: 30px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 15px; }
+        .intro-box { background: var(--main); padding: 30px 20px 20px; text-align: center; }
         .intro-text { font-size: 0.9rem; color: #fff; line-height: 1.7; max-width: 420px; margin: 0 auto; text-align: left; }
 
-        .container { max-width: 500px; margin: 0 auto; padding: 0 15px 15px; }
+        /* カウンターエリア：背景はサイトそのまま（--bg） */
+        .counter-section { padding: 15px; text-align: center; margin-bottom: 10px; }
 
-        /* カードデザイン */
-        .card {
-            background: #fff; border-radius: 16px; margin-bottom: 16px;
-            display: flex; align-items: center; cursor: pointer; border: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.2s; overflow: hidden;
-        }
-        .card:active { transform: scale(0.96); }
+        .container { max-width: 500px; margin: 0 auto; padding: 0 15px 15px; }
+        .card { background: #fff; border-radius: 16px; margin-bottom: 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
         .card-img { width: 90px; height: 90px; object-fit: cover; flex-shrink: 0; border-right: 1px solid #eee; }
         .info { flex: 1; padding: 10px; }
         .info h2 { margin: 0; font-size: 1rem; font-weight: bold; }
         .info p { margin: 4px 0 0; font-size: 0.75rem; color: #8e8e93; }
         .hot { display: inline-block; background: var(--main); color: #fff; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; margin-top: 5px; font-weight: bold; }
 
-        /* 診断・結果画面共通 */
         #quiz-ui { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 100; flex-direction: column; padding: 20px; box-sizing: border-box; }
         .progress { color: var(--main); font-weight: bold; text-align: center; margin-top: 20px; }
         .q-text { font-size: 1.3rem; font-weight: 800; text-align: center; flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 400px; margin: 0 auto 40px; }
-        .btn { padding: 20px; border-radius: 16px; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; }
+        .btn { padding: 20px; border-radius: 16px; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; text-align: center; }
         .btn-yes { background: var(--main); color: #fff; }
         .btn-no { background: #e5e5ea; color: #000; }
-        
-        /* シェアボタン（𝕏風） */
-        .btn-share { background: #000; color: #fff; margin-top: 15px; }
+        .btn-share { background: #000; color: #fff; margin-top: 15px; text-decoration: none; }
 
         .result-ui { display: none; text-align: center; flex-direction: column; padding: 20px; height: 100%; overflow-y: auto; }
         .res-name { font-size: 1.8rem; font-weight: 900; color: var(--main); margin: 20px 0; }
@@ -60,8 +46,13 @@
 
 <div class="intro-box">
     <p class="intro-text">
-        国内最大級の精密診断サイトを目指すDiag.Labへようこそ。いろいろな質問で、あなたの未来やルーツを詳細に分析します。スキマ時間の暇つぶしや、自分磨きの参考にどうぞ！
+        国内最大級の精密診断サイトを目指すDiag.Labへようこそ。いろいろな質問で、あなたの未来やルーツを詳細に分析します。
     </p>
+</div>
+
+<div class="counter-section">
+    <script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=40863366&main=1"></script>
+    <noscript><img src="//counter1.fc2.com/counter_img.php?id=40863366&main=1" /></noscript>
 </div>
 
 <div class="container">
@@ -73,7 +64,6 @@
             <span class="hot">SNSで話題 🔥</span>
         </div>
     </div>
-
     <div class="card" onclick="startQuiz('zense')">
         <img src="1774787133599.png" alt="前世" class="card-img">
         <div class="info">
@@ -81,7 +71,6 @@
             <p>10の質問で魂の記憶を呼び覚まします。</p>
         </div>
     </div>
-
     <div class="card" onclick="startQuiz('tsun')">
         <img src="1774787085699.png" alt="ツンデレ" class="card-img">
         <div class="info">
@@ -100,18 +89,19 @@
             <button class="btn btn-no" onclick="handleAnswer(false)">いいえ</button>
         </div>
     </div>
-    
     <div id="result-ui" class="result-ui">
         <div style="font-size:0.9rem; color:#888;">診断結果</div>
         <div class="res-name" id="res-name">結果</div>
         <div class="res-desc" id="res-desc">解説</div>
-        
         <button id="share-btn" class="btn btn-share">𝕏 で結果をシェアする</button>
-
-        <div class="ad-space">【PR】あなたにぴったりの出会いをサポート。<br>理想のパートナー診断はこちら（スポンサー枠予定）</div>
+        <div class="ad-space">【PR】理想のパートナー診断はこちら</div>
         <button class="btn btn-no" style="margin-top:20px;" onclick="location.reload()">トップに戻る</button>
     </div>
 </div>
+
+<footer style="text-align: center; padding: 30px; color: #ccc; font-size: 0.7rem;">
+    &copy; 2026 Diag.Lab | Precision Diagnosis Portal
+</footer>
 
 <script>
 const db = {
@@ -127,79 +117,29 @@ const db = {
     zense: {
         title: "前世タイプ診断",
         qs: ["冒険好き？","直感派？","歴史好き？","自由が好き？","冷静な方？","一人が好き？","芸術が好き？","運が良い？","負けず嫌い？","夢をよく見る？"], 
-        results: [
-            { n: "平安貴族", d: "和歌を詠み、静かな時間を過ごしていたようです。" }, 
-            { n: "魔法使い", d: "目に見えない力で運命を操っていました。" }, 
-            { n: "海賊", d: "自由とスリルを愛し、大海原を駆け抜けていました。" }
-        ] 
+        results: [ { n: "平安貴族", d: "和歌を詠み、静かな時間を過ごしていたようです。" }, { n: "魔法使い", d: "目に見えない力で運命を操っていました。" }, { n: "海賊", d: "自由とスリルを愛し、大海原を駆け抜けていました。" } ] 
     },
     tsun: { 
         title: "ツンデレ比率診断",
         qs: ["素直になれない？","照れ屋？","甘えん坊？","不器用？","ギャップがある？","負けず嫌い？","一人で抱え込む？","心配性？","実は熱い？","素直になりたい？"], 
-        results: [
-            { n: "ピュア度100%", d: "裏表のない太陽のような存在です。" }, 
-            { n: "隠れツンデレ", d: "クールな仮面の下に熱い心を隠しています。" }, 
-            { n: "王道ツンデレ", d: "不器用な態度の裏に深い愛を隠しています。" }
-        ] 
+        results: [ { n: "ピュア度100%", d: "裏表のない太陽のような存在です。" }, { n: "隠れツンデレ", d: "クールな仮面の下に熱い心を隠しています。" }, { n: "王道ツンデレ", d: "不器用な態度の裏に深い愛を隠しています。" } ] 
     }
 };
-
 let mode = "", step = 0, score = 0;
-
-function startQuiz(t) { 
-    mode = t; step = 0; score = 0; 
-    document.getElementById('quiz-ui').style.display = 'flex'; 
-    document.getElementById('quiz-main').style.display = 'contents';
-    document.getElementById('result-ui').style.display = 'none';
-    showNext(); 
-}
-
-function showNext() { 
-    document.getElementById('p-count').innerText = `Q.${step + 1} / 10`; 
-    document.getElementById('q-text').innerText = db[mode].qs[step]; 
-}
-
-function handleAnswer(ans) { 
-    if(ans) score++; 
-    step++; 
-    if(step < 10) showNext(); 
-    else showResult(); 
-}
-
+function startQuiz(t) { mode = t; step = 0; score = 0; document.getElementById('quiz-ui').style.display = 'flex'; document.getElementById('quiz-main').style.display = 'contents'; document.getElementById('result-ui').style.display = 'none'; showNext(); }
+function showNext() { document.getElementById('p-count').innerText = `Q.${step + 1} / 10`; document.getElementById('q-text').innerText = db[mode].qs[step]; }
+function handleAnswer(ans) { if(ans) score++; step++; if(step < 10) showNext(); else showResult(); }
 function showResult() {
     document.getElementById('quiz-main').style.display = 'none';
     document.getElementById('result-ui').style.display = 'flex';
-    
     let resIdx = score >= 8 ? 2 : (score >= 4 ? 1 : 0);
     const result = db[mode].results[resIdx];
-    
     document.getElementById('res-name').innerText = result.n;
     document.getElementById('res-desc').innerText = result.d;
-
-    // シェア機能のリンク作成
     const shareText = `診断結果：${result.n}\n${result.d}\n\n#DiagLab #${db[mode].title}`;
     const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(location.href)}`;
-    
-    document.getElementById('share-btn').onclick = () => {
-        window.open(shareUrl, '_blank');
-    };
+    document.getElementById('share-btn').onclick = () => window.open(shareUrl, '_blank');
 }
 </script>
 </body>
-    <footer style="text-align: center; padding: 40px 20px; background: #fff; border-top: 1px solid #eee; margin-top: 30px;">
-    <p style="font-size: 0.8rem; color: #888; margin-bottom: 15px; font-weight: bold;">
-        現在の累計訪問者数
-    </p>
-    
-    <script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=40863366&main=1"></script>
-    <noscript><img src="//counter1.fc2.com/counter_img.php?id=40863366&main=1" /></noscript>
-    
-    <p style="font-size: 0.7rem; color: #ccc; margin-top: 25px;">
-        &copy; 2026 Diag.Lab | 国内最大級の精密診断サイトを目指して
-    </p>
-</footer>
-
-</body>
-</html>
-
 </html>
