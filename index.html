@@ -6,16 +6,20 @@
     <meta name="description" content="Diag.Lab - あなたの将来のモテ期や前世をAIが精密診断。SNSで話題の恋愛診断ポータルサイト。">
     <title>Diag.Lab | 究極の診断ポータル</title>
     <style>
-        :root { --main: #007aff; --bg: #fdf2f5; } 
+        :root { --main: #007aff; --bg: #fdf2f5; --hot-pink: #ff4778; } 
         body { margin: 0; padding: 0; background: var(--bg); color: #1c1c1e; font-family: sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        /* ヘッダー：青背景、白文字ロゴ（★維持） */
         header { background: var(--main); padding: 15px; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 10; }
         .logo { font-size: 1.5rem; font-weight: 900; color: #fff; }
         
-        .intro-box { background: var(--main); padding: 30px 20px 20px; text-align: center; }
-        .intro-text { font-size: 0.9rem; color: #fff; line-height: 1.7; max-width: 420px; margin: 0 auto; text-align: left; }
+        /* ★修正：紹介文エリア。青い背景を消してサイト背景と同じに。paddingを調整 */
+        .intro-box { background: transparent; padding: 25px 20px 10px; text-align: center; }
+        /* ★修正：紹介文の文字色を青に */
+        .intro-text { font-size: 0.9rem; color: var(--main); line-height: 1.7; max-width: 420px; margin: 0 auto; text-align: left; }
 
-        /* カウンターエリア：背景はサイトそのまま（--bg） */
-        .counter-section { padding: 15px; text-align: center; margin-bottom: 10px; }
+        /* カウンターエリア */
+        .counter-section { padding: 10px; text-align: center; margin-bottom: 5px; }
 
         .container { max-width: 500px; margin: 0 auto; padding: 0 15px 15px; }
         .card { background: #fff; border-radius: 16px; margin-bottom: 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
@@ -23,7 +27,9 @@
         .info { flex: 1; padding: 10px; }
         .info h2 { margin: 0; font-size: 1rem; font-weight: bold; }
         .info p { margin: 4px 0 0; font-size: 0.75rem; color: #8e8e93; }
-        .hot { display: inline-block; background: var(--main); color: #fff; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; margin-top: 5px; font-weight: bold; }
+        
+        /* ★修正：SNSで話題ラベル。背景をピンク赤系に */
+        .hot { display: inline-block; background: var(--hot-pink); color: #fff; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; margin-top: 5px; font-weight: bold; }
 
         #quiz-ui { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 100; flex-direction: column; padding: 20px; box-sizing: border-box; }
         .progress { color: var(--main); font-weight: bold; text-align: center; margin-top: 20px; }
@@ -90,56 +96,4 @@
         </div>
     </div>
     <div id="result-ui" class="result-ui">
-        <div style="font-size:0.9rem; color:#888;">診断結果</div>
-        <div class="res-name" id="res-name">結果</div>
-        <div class="res-desc" id="res-desc">解説</div>
-        <button id="share-btn" class="btn btn-share">𝕏 で結果をシェアする</button>
-        <div class="ad-space">【PR】理想のパートナー診断はこちら</div>
-        <button class="btn btn-no" style="margin-top:20px;" onclick="location.reload()">トップに戻る</button>
-    </div>
-</div>
-
-<footer style="text-align: center; padding: 30px; color: #ccc; font-size: 0.7rem;">
-    &copy; 2026 Diag.Lab | Precision Diagnosis Portal
-</footer>
-
-<script>
-const db = {
-    love: {
-        title: "一生で何人に告白されるか診断",
-        qs: ["自分から話しかけるのは得意だ？","人の変化（髪型など）にすぐ気づく？","多趣味な方だ？","SNSの返信は早い方だ？","聞き上手だと言われる？","ファッションにはこだわりがある？","笑顔を褒められることが多い？","一人の時間も楽しめる？","サプライズが好きだ？","今の自分が好きだ？"],
-        results: [
-            { n: "【推定3人】じっくり愛される派", d: "あなたは派手にモテるタイプではありませんが、一度好きになった人に深く愛される才能があります。" },
-            { n: "【推定15人】かなりのモテ素質あり", d: "あなたは周囲を明るくする魅力を持っています。無自覚に振りまく愛嬌で、多くの人を惹きつけます。" },
-            { n: "【推定50人以上】伝説のモテ体質", d: "圧倒的なカリスマ性の持ち主。あなたの放つオーラに、出会う人の多くが心を奪われます。" }
-        ]
-    },
-    zense: {
-        title: "前世タイプ診断",
-        qs: ["冒険好き？","直感派？","歴史好き？","自由が好き？","冷静な方？","一人が好き？","芸術が好き？","運が良い？","負けず嫌い？","夢をよく見る？"], 
-        results: [ { n: "平安貴族", d: "和歌を詠み、静かな時間を過ごしていたようです。" }, { n: "魔法使い", d: "目に見えない力で運命を操っていました。" }, { n: "海賊", d: "自由とスリルを愛し、大海原を駆け抜けていました。" } ] 
-    },
-    tsun: { 
-        title: "ツンデレ比率診断",
-        qs: ["素直になれない？","照れ屋？","甘えん坊？","不器用？","ギャップがある？","負けず嫌い？","一人で抱え込む？","心配性？","実は熱い？","素直になりたい？"], 
-        results: [ { n: "ピュア度100%", d: "裏表のない太陽のような存在です。" }, { n: "隠れツンデレ", d: "クールな仮面の下に熱い心を隠しています。" }, { n: "王道ツンデレ", d: "不器用な態度の裏に深い愛を隠しています。" } ] 
-    }
-};
-let mode = "", step = 0, score = 0;
-function startQuiz(t) { mode = t; step = 0; score = 0; document.getElementById('quiz-ui').style.display = 'flex'; document.getElementById('quiz-main').style.display = 'contents'; document.getElementById('result-ui').style.display = 'none'; showNext(); }
-function showNext() { document.getElementById('p-count').innerText = `Q.${step + 1} / 10`; document.getElementById('q-text').innerText = db[mode].qs[step]; }
-function handleAnswer(ans) { if(ans) score++; step++; if(step < 10) showNext(); else showResult(); }
-function showResult() {
-    document.getElementById('quiz-main').style.display = 'none';
-    document.getElementById('result-ui').style.display = 'flex';
-    let resIdx = score >= 8 ? 2 : (score >= 4 ? 1 : 0);
-    const result = db[mode].results[resIdx];
-    document.getElementById('res-name').innerText = result.n;
-    document.getElementById('res-desc').innerText = result.d;
-    const shareText = `診断結果：${result.n}\n${result.d}\n\n#DiagLab #${db[mode].title}`;
-    const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(location.href)}`;
-    document.getElementById('share-btn').onclick = () => window.open(shareUrl, '_blank');
-}
-</script>
-</body>
-</html>
+        <div style="font-size:0.9rem; color:#8
