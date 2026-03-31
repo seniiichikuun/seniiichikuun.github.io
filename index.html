@@ -3,21 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="msvalidate.01" content="ACE554E26021F4A982DFC1F9F2FC2B19" />
-
+    <meta name="msvalidate.01" content="AC1F424E6213B53C58B354F9D1E6F34C" />
     <title>Diag.Lab | 究極の精密診断ポータル</title>
-    <meta name="description" content="Diag.Lab（ダイアグラボ）は、AI技術を駆使した精密診断サイトです。一生で何人に告白されるか、あなたの前世や性格比率など、SNSで話題の診断コンテンツを無料で楽しめます。">
-    <meta name="keywords" content="診断, 恋愛診断, 告白, 前世診断, 精密診断, DiagLab, ダイアグラボ">
-    <meta property="og:title" content="Diag.Lab | 究極の精密診断ポータル">
-    <meta property="og:description" content="あなたの運命を可視化。国内最大級の診断サイトを目指すDiag.Labで今すぐチェック！">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://diag-lab.github.io/">
-    <meta property="og:site_name" content="Diag.Lab">
-
     <style>
-                /* カード全体の高さを110pxに固定して揃える */
-                /* 利用規約の画面全体の設定 */
+        :root { --main: #007aff; --bg: #f2f2f7; }
+        body { margin: 0; padding: 0; background: var(--bg); font-family: -apple-system, sans-serif; }
+
+        /* 利用規約のオーバーレイ（全画面） */
         #terms-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85);
@@ -26,21 +18,21 @@
             z-index: 10000;
         }
 
-        /* 規約の白い箱（画面の約7〜8割） */
+        /* 規約の白い箱（縦長の長方形） */
         .terms-box {
             background: #fff;
             width: 85%;
-            height: 70vh; 
-            padding: 20px;
-            border-radius: 12px;
+            height: 70vh; /* 画面の7割の高さで縦長に */
+            padding: 25px;
+            border-radius: 16px;
             overflow-y: auto; 
-            font-size: 0.85rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            line-height: 1.7;
             color: #333;
-            margin: 0 !important; /* 余計な余白を消す */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        /* 同意ボタン（長方形） */
+        /* 同意ボタン（スッキリした横長） */
         .agree-btn {
             display: block;
             width: 85%;
@@ -49,182 +41,80 @@
             background: var(--main);
             color: #fff;
             border: none;
-            border-radius: 8px; 
-            font-size: 1rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
         }
 
-        /* 診断カードの大きさを揃える設定 */
-        .card { height: 110px !important; display: flex; align-items: center; }
-        .card-img { width: 110px !important; height: 110px !important; }
+        header { background: #002b5c; color: #fff; padding: 20px; text-align: center; }
+        .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; }
 
+        .container { padding: 16px; max-width: 500px; margin: 0 auto; }
+
+        /* カードの大きさを110pxで統一 */
         .card { 
-            background: #fff; 
-            border-radius: 16px; 
-            margin-bottom: 16px; 
-            display: flex; 
-            align-items: center; 
-            cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-            overflow: hidden;
-            height: 110px !important; /* !importantをつけて優先させる */
+            background: #fff; border-radius: 16px; margin-bottom: 16px; 
+            display: flex; align-items: center; cursor: pointer; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; height: 110px;
         }
-        /* 画像を正方形に固定 */
-        .card-img { 
-            width: 110px !important; 
-            height: 110px !important; 
-            object-fit: cover; 
-            flex-shrink: 0; 
-            border-right: 1px solid #eee; 
-        }
-        /* 文字情報を上下中央に配置 */
-        .info { 
-            flex: 1; 
-            padding: 12px; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center; 
-            overflow: hidden; 
-        }
-        .info h1 { 
-            margin: 0; 
-            font-size: 0.95rem; 
-            font-weight: bold; 
-            line-height: 1.2;
-        }
-        /* 説明文が長すぎても2行でカットする設定 */
-        .info p { 
-            margin: 4px 0 0; 
-            font-size: 0.7rem; 
-            color: #8e8e93; 
-            display: -webkit-box;
-            -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+        .card-img { width: 110px; height: 110px; object-fit: cover; flex-shrink: 0; border-right: 1px solid #eee; }
+        .info { flex: 1; padding: 12px; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+        .info h1 { margin: 0; font-size: 0.95rem; font-weight: bold; }
+        .info p { margin: 4px 0 0; font-size: 0.75rem; color: #8e8e93; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        :root { --main: #007aff; --bg: #fdf2f5; --hot-pink: #ff4778; } 
-        body { margin: 0; padding: 0; background: var(--bg); color: #1c1c1e; font-family: sans-serif; -webkit-tap-highlight-color: transparent; }
-        
-        /* 利用規約のオーバーレイ（全画面） */
-        #terms-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 1000;
-            display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;
-        }
-        .terms-card {
-            background: #fff; border-radius: 24px; padding: 30px; width: 100%; max-width: 400px; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .terms-card h3 { color: var(--main); margin-top: 0; font-size: 1.4rem; }
-        .terms-box {
-            text-align: left; font-size: 0.8rem; color: #666; height: 160px; overflow-y: auto;
-            border: 1px solid #eee; padding: 15px; margin: 20px 0; border-radius: 12px; line-height: 1.6;
-            background: #fafafa;
-        }
-        .agree-btn { background: var(--main); color: #fff; border: none; padding: 16px 30px; border-radius: 50px; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; }
-
-        /* デザイン維持：青ヘッダー */
-        header { background: var(--main); padding: 15px; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 10; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: #fff; }
-        
-        /* デザイン維持：青文字・背景なし */
-        .intro-box { background: transparent; padding: 25px 20px 10px; text-align: center; }
-        .intro-text { font-size: 0.9rem; color: var(--main); line-height: 1.7; max-width: 420px; margin: 0 auto; text-align: left; }
-
-        .counter-section { padding: 10px; text-align: center; margin-bottom: 5px; }
-
-        .container { max-width: 500px; margin: 0 auto; padding: 0 15px 15px; }
-        .card { background: #fff; border-radius: 16px; margin-bottom: 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
-        .card-img { width: 90px; height: 90px; object-fit: cover; flex-shrink: 0; border-right: 1px solid #eee; }
-        .info { flex: 1; padding: 10px; }
-        .info h1 { margin: 0; font-size: 1rem; font-weight: bold; }
-        .info p { margin: 4px 0 0; font-size: 0.75rem; color: #8e8e93; }
-        
-        /* デザイン維持：ピンク赤ラベル */
-        .hot { display: inline-block; background: var(--hot-pink); color: #fff; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; margin-top: 5px; font-weight: bold; }
-
-        /* 診断画面・結果画面 */
-        #quiz-ui { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 100; flex-direction: column; padding: 20px; box-sizing: border-box; }
-        .progress { color: var(--main); font-weight: bold; text-align: center; margin-top: 20px; }
-        .q-text { font-size: 1.3rem; font-weight: 800; text-align: center; flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 400px; margin: 0 auto 40px; }
-        .btn { padding: 20px; border-radius: 16px; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; text-align: center; }
+        /* 診断画面 */
+        #quiz-ui, #result-ui { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; flex-direction: column; align-items: center; justify-content: center; z-index: 999; padding: 20px; box-sizing: border-box; }
+        .progress { color: var(--main); font-weight: bold; margin-bottom: 20px; }
+        .q-text { font-size: 1.4rem; font-weight: 800; text-align: center; margin-bottom: 40px; }
+        .btns { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 300px; }
+        .btn { padding: 20px; border-radius: 16px; border: none; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
         .btn-yes { background: var(--main); color: #fff; }
         .btn-no { background: #e5e5ea; color: #000; }
-        .btn-share { background: #000; color: #fff; margin-top: 15px; text-decoration: none; }
 
-        .result-ui { display: none; text-align: center; flex-direction: column; padding: 20px; height: 100%; overflow-y: auto; }
+        /* 結果画面 */
         .res-name { font-size: 1.8rem; font-weight: 900; color: var(--main); margin: 20px 0; }
-        .res-desc { background: #f8f9fa; padding: 20px; border-radius: 12px; text-align: left; font-size: 0.95rem; line-height: 1.6; }
-        .ad-space { margin-top: 30px; border: 1px dashed #ccc; padding: 15px; color: #999; font-size: 0.8rem; border-radius: 8px; }
+        .res-desc { background: #f8f9fa; padding: 20px; border-radius: 12px; line-height: 1.6; margin-bottom: 30px; }
     </style>
 </head>
 <body>
 
-<div id="terms-overlay">
-          <div class="terms-box">
+    <div id="terms-overlay">
+        <div class="terms-box">
             <strong>【利用規約】</strong><br>
-            1. 本サービス「Diag.Lab」は、エンターテインメントを目的とした精密診断サイトです。診断結果はあくまでも推測に基づくものであり、医学的・科学的根拠を保証するものではありません。<br>
-            2. 本サイトを利用したことにより発生したいかなる損害・トラブルについても、当運営は一切の責任を負いかねます。自己責任でのご利用をお願いいたします。<br>
-            3. 本サイトのコンテンツ（文章・画像・診断プログラム）の無断転載・商用利用を禁じます。SNSへの結果シェアは大歓迎です！<br><br>
-
+            1. 本サービス「Diag.Lab」は、エンターテインメントを目的とした精密診断サイトです。診断結果はAI独自のロジックに基づくものであり、医学的・科学的根拠を保証するものではありません。<br>
+            2. 本サイトの利用による損害・トラブルについて、当運営は一切の責任を負いかねます。自己責任でご利用ください。<br>
+            3. コンテンツの無断転載・商用利用を禁じます。<br><br>
             <strong>【プライバシーポリシー】</strong><br>
-            1. 個人情報の収集：本サイトでは、お客様の個人情報などの診断用データを入力いただく場合がありますが、これらはすべて「あなたのブラウザ内」で処理されます。当方のサーバーに保存・蓄積されることは一切ありません。<br>
-            2. クッキー（Cookie）の利用：サイトの利便性向上やアクセス解析（Bing/Google等）のために、Cookieを使用することがあります。これは匿名で収集されるものであり、個人を特定するものではありません。<br>
-            3. 第三者配信の広告：将来的に広告配信サービスを利用する場合、ユーザーの興味に応じた広告を表示するためにCookieを使用することがあります。<br>
-            4. 法令遵守：当サイトは、日本の法令を遵守し、ユーザーのプライバシー保護に努めます。
+            1. 個人情報の収集：入力データはブラウザ内でのみ処理され、サーバーへ保存・蓄積されることはありません。<br>
+            2. クッキーの利用：利便性向上や解析のためにCookieを使用することがあります。これは匿名情報であり個人を特定しません。<br>
+            3. 法令遵守：当サイトは日本の法令を遵守し、ユーザーのプライバシー保護に努めます。
         </div>
-
         <button class="agree-btn" onclick="agreeTerms()">同意して診断をはじめる</button>
     </div>
-</div>
 
-<header><div class="logo">Diag.Lab</div></header>
+    <header><div class="logo">Diag.Lab</div></header>
 
-<div class="intro-box">
-    <section>
-        <p class="intro-text">
-            国内最大級の精密診断サイトを目指すDiag.Lab（ダイアグラボ）へようこそ。いろいろな質問で、あなたの未来やルーツを詳細に分析します。
-        </p>
-    </section>
-</div>
+    <div class="container">
+        <article class="card" onclick="startQuiz('love')">
+            <img src="1774857935465-2.png" class="card-img">
+            <div class="info"><h1>一生で何人に告白されるか診断</h1><p>あなたの潜在的な魅力を数値化。未来のモテ期を予言します。</p></div>
+        </article>
+        <article class="card" onclick="startQuiz('zense')">
+            <img src="1774787133599.png" class="card-img">
+            <div class="info"><h1>前世タイプ診断</h1><p>10の質問で魂の記憶を呼び覚まします。</p></div>
+        </article>
+        <article class="card" onclick="startQuiz('tsun')">
+            <img src="1774787085699.png" class="card-img">
+            <div class="info"><h1>ツンデレ比率診断</h1><p>隠れた本心をAIが精密に可視化。</p></div>
+        </article>
+        <article class="card" onclick="startQuiz('psycho')">
+            <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=200&auto=format&fit=crop" class="card-img">
+            <div class="info"><h1>サイコパス度診断</h1><p>あなたの合理的な思考の裏に隠された冷徹さを暴きます。</p></div>
+        </article>
+    </div>
 
-<div class="counter-section">
-    <script language="javascript" type="text/javascript" src="//counter1.fc2.com/counter.php?id=40863366&main=1"></script>
-    <noscript><img src="//counter1.fc2.com/counter_img.php?id=40863366&main=1" /></noscript>
-</div>
-
-<div class="container">
-    <article class="card" onclick="startQuiz('love')">
-        <img src="1774857935465~2.png" alt="一生で何人に告白されるか診断" class="card-img">
-        <div class="info">
-            <h1>一生で何人に告白されるか診断</h1>
-            <p>あなたの潜在的な魅力を数値化。未来のモテ期を予言します。</p>
-            <span class="hot">SNSで話題 🔥</span>
-        </div>
-    </article>
-
-    <article class="card" onclick="startQuiz('zense')">
-        <img src="1774787133599.png" alt="前世タイプ診断" class="card-img">
-        <div class="info">
-            <h1>前世タイプ診断</h1>
-            <p>10の質問で魂の記憶を呼び覚まします。</p>
-        </div>
-    </article>
-
-    <article class="card" onclick="startQuiz('tsun')">
-        <img src="1774787085699.png" alt="ツンデレ比率診断" class="card-img">
-        <div class="info">
-            <h1>ツンデレ比率診断</h1>
-            <p>隠れた本心をAIが精密に可視化。</p>
-        </div>
-    </article>
-</div>
-
-<div id="quiz-ui">
-    <div id="quiz-main" style="display:contents;">
+    <div id="quiz-ui">
         <div class="progress" id="p-count">Q.1 / 10</div>
         <div class="q-text" id="q-text">質問</div>
         <div class="btns">
@@ -232,57 +122,85 @@
             <button class="btn btn-no" onclick="handleAnswer(false)">いいえ</button>
         </div>
     </div>
-    <div id="result-ui" class="result-ui">
+
+    <div id="result-ui">
         <div style="font-size:0.9rem; color:#888;">診断結果</div>
         <div class="res-name" id="res-name">結果</div>
         <div class="res-desc" id="res-desc">解説</div>
-        <button id="share-btn" class="btn btn-share">𝕏 で結果をシェアする</button>
-        <button class="btn btn-no" style="margin-top:20px;" onclick="location.reload()">トップに戻る</button>
+        <button class="btn btn-yes" onclick="location.reload()">トップに戻る</button>
     </div>
-</div>
 
-<footer style="text-align: center; padding: 30px; color: #ccc; font-size: 0.7rem;">
-    &copy; 2026 Diag.Lab | Precision Diagnosis Portal
-</footer>
+    <script>
+        function agreeTerms() { document.getElementById('terms-overlay').style.display = 'none'; }
 
-<script>
-function agreeTerms() { document.getElementById('terms-overlay').style.display = 'none'; }
-const db = {
-    love: {
-        title: "一生で何人に告白されるか診断",
-        qs: ["自分から話しかけるのは得意だ？","人の変化（髪型など）にすぐ気づく？","多趣味な方だ？","SNSの返信は早い方だ？","聞き上手だと言われる？","ファッションにはこだわりがある？","笑顔を褒められることが多い？","一人の時間も楽しめる？","サプライズが好きだ？","今の自分が好きだ？"],
-        results: [
-            { n: "【推定3人】じっくり愛される派", d: "あなたは派手にモテるタイプではありませんが、一度好きになった人に深く愛される才能があります。" },
-            { n: "【推定15人】かなりのモテ素質あり", d: "あなたは周囲を明るくする魅力を持っています。無自覚に振りまく愛嬌で、多くの人を惹きつけます。" },
-            { n: "【推定50人以上】伝説のモテ体質", d: "圧倒的なカリスマ性の持ち主。あなたの放つオーラに、出会う人の多くが心を奪われます。" }
-        ]
-    },
-    zense: {
-        title: "前世タイプ診断",
-        qs: ["冒険好き？","直感派？","歴史好き？","自由が好き？","冷静な方？","一人が好き？","芸術が好き？","運が良い？","負けず嫌い？","夢をよく見る？"], 
-        results: [ { n: "平安貴族", d: "和歌を詠み、静かな時間を過ごしていたようです。" }, { n: "魔法使い", d: "目に見えない力で運命を操っていました。" }, { n: "海賊", d: "自由とスリルを愛し、大海原を駆け抜けていました。" } ] 
-    },
-    tsun: { 
-        title: "ツンデレ比率診断",
-        qs: ["素直になれない？","照れ屋？","甘えん坊？","不器用？","ギャップがある？","負けず嫌い？","一人で抱え込む？","心配性？","実は熱い？","素直になりたい？"], 
-        results: [ { n: "ピュア度100%", d: "裏表のない太陽のような存在です。" }, { n: "隠れツンデレ", d: "クールな仮面の下に熱い心を隠しています。" }, { n: "王道ツンデレ", d: "不器用な態度の裏に深い愛を隠しています。" } ] 
-    }
-};
-let mode = "", step = 0, score = 0;
-function startQuiz(t) { mode = t; step = 0; score = 0; document.getElementById('quiz-ui').style.display = 'flex'; document.getElementById('quiz-main').style.display = 'contents'; document.getElementById('result-ui').style.display = 'none'; showNext(); }
-function showNext() { document.getElementById('p-count').innerText = `Q.${step + 1} / 10`; document.getElementById('q-text').innerText = db[mode].qs[step]; }
-function handleAnswer(ans) { if(ans) score++; step++; if(step < 10) showNext(); else showResult(); }
-function showResult() {
-    document.getElementById('quiz-main').style.display = 'none';
-    document.getElementById('result-ui').style.display = 'flex';
-    let resIdx = score >= 8 ? 2 : (score >= 4 ? 1 : 0);
-    const result = db[mode].results[resIdx];
-    document.getElementById('res-name').innerText = result.n;
-    document.getElementById('res-desc').innerText = result.d;
-    const shareText = `診断結果：${result.n}\n${result.d}\n\n#DiagLab #${db[mode].title}`;
-    const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(location.href)}`;
-    document.getElementById('share-btn').onclick = () => window.open(shareUrl, '_blank');
-}
-</script>
+        const db = {
+            love: {
+                title: "一生で何人に告白されるか診断",
+                qs: ["自分から話しかけるのは得意？", "人の変化にすぐ気づく？", "多趣味なほうだ？", "聞き上手だと言われる？", "一人でいるより誰かといたい？", "初対面でも緊張しない？", "マメに連絡を返すほうだ？", "ファッションにはこだわりがある？", "ポジティブ思考だ？", "約束は必ず守る？"],
+                results: [
+                    { n: "【推定3人】じっくり愛される派", d: "あなたは派手にモテるタイプではありませんが、深い信頼を築ける人と結ばれる運命です。" },
+                    { n: "【推定15人】かなりのモテ素質あり", d: "周囲を明るくする魅力があります。自信を持って振る舞えばさらに告白数は増えるでしょう。" },
+                    { n: "【推定50人以上】伝説のモテ体質", d: "圧倒的なカリスマ性の持ち主。歩くだけで人を惹きつける、一生困らないモテ運です。" }
+                ]
+            },
+            zense: {
+                title: "前世タイプ診断",
+                qs: ["冒険好き？", "直感派？", "歴史好き？", "自由が好き？", "冷静な方？", "一人が好き？", "自然が好き？", "芸術に興味がある？", "正義感が強い？", "海より山派？"],
+                results: [
+                    { n: "平安貴族", d: "和歌を詠み、静かな時間を過ごしていたようです。優雅な立ち振る舞いが今も残っています。" },
+                    { n: "戦国武将", d: "常に戦いの中にいたあなた。今の決断力の速さは、当時の経験から来ているのかも。" },
+                    { n: "異国の旅人", d: "広い世界を旅していた自由人。今の好奇心旺盛な性格は前世譲りです。" }
+                ]
+            },
+            tsun: {
+                title: "ツンデレ比率診断",
+                qs: ["素直になれない？", "照れ屋？", "甘えん坊？", "不器用？", "ギャップがある？", "実は寂しがり？", "口が悪いと言われる？", "本音を隠しがち？", "世話焼き？", "映画で泣く？"],
+                results: [
+                    { n: "ピュア度100%", d: "裏表のない太陽のような存在です。ツン要素ゼロの癒やし系。" },
+                    { n: "黄金比ツンデレ", d: "厳しさと優しさのバランスが絶妙。一番モテるタイプです。" },
+                    { n: "極限のツン", d: "デレを見せるのは一生に一度レベル。その希少価値に惹かれる人が後を絶ちません。" }
+                ]
+            },
+            psycho: {
+                title: "サイコパス度診断",
+                qs: ["情に流されず判断できる？", "嘘をつくことに抵抗がない？", "スリルがあるほうが燃える？", "他人の悩みは正直しんどい？", "結果のためなら手段を選ばない？", "一人の時間が一番落ち着く？", "自分は特別な存在だと思う？", "ルールは破るためにあると思う？", "過去の後悔はほとんどしない？", "人を利用することに罪悪感がない？"],
+                results: [
+                    { n: "【10%】天使すぎる善人", d: "あなたは驚くほど純粋です。他人を疑うことを知らず、損をしてでも人を助けるタイプです。" },
+                    { n: "【50%】一般市民（時々毒舌）", d: "いたって普通の感覚です。基本は優しいですが、合理的に考えようとする一面も。" },
+                    { n: "【95%】完成されたサイコパス", d: "感情よりも論理。目的のためには極めて冷徹になれる、成功者に多いカリスマタイプです。" }
+                ]
+            }
+        };
+
+        let mode = "", step = 0, score = 0;
+
+        function startQuiz(t) { 
+            mode = t; step = 0; score = 0; 
+            document.getElementById('quiz-ui').style.display = 'flex'; 
+            showNext(); 
+        }
+
+        function showNext() {
+            document.getElementById('p-count').innerText = `Q.${step + 1} / 10`;
+            document.getElementById('q-text').innerText = db[mode].qs[step];
+        }
+
+        function handleAnswer(ans) {
+            if(ans) score++;
+            step++;
+            if(step < 10) showNext();
+            else showResult();
+        }
+
+        function showResult() {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('result-ui').style.display = 'flex';
+            let resIdx = score >= 8 ? 2 : (score >= 4 ? 1 : 0);
+            let result = db[mode].results[resIdx];
+            document.getElementById('res-name').innerText = result.n;
+            document.getElementById('res-desc').innerText = result.d;
+        }
+    </script>
 </body>
 </html>
+
