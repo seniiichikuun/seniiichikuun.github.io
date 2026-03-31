@@ -8,7 +8,7 @@
         :root { --main: #007aff; --header-bg: #002b5c; --bg: #f2f2f7; }
         body { margin: 0; padding: 0; background: var(--bg); font-family: -apple-system, sans-serif; color: #333; }
 
-        /* 1. 「本サイトをご利用するにあたって」のポップアップ */
+        /* 利用規約ポップアップ */
         #terms-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center;
@@ -28,7 +28,6 @@
             padding: 16px; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
         }
 
-        /* ヘッダー・紹介文 */
         header { background: var(--header-bg); color: #fff; padding: 20px; text-align: center; }
         .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; }
         .intro-box {
@@ -39,7 +38,6 @@
 
         .container { padding: 0 16px 40px; max-width: 500px; margin: 0 auto; }
 
-        /* カードデザイン */
         .card { 
             background: #fff; border-radius: 16px; margin-bottom: 16px; 
             display: flex; align-items: center; cursor: pointer; 
@@ -50,7 +48,6 @@
         .info h1 { margin: 0; font-size: 1rem; font-weight: bold; }
         .info p { margin: 4px 0 0; font-size: 0.75rem; color: #8e8e93; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* 診断・結果画面 */
         #quiz-ui, #result-ui { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: #fff; flex-direction: column; align-items: center; 
@@ -62,9 +59,18 @@
         .btn { padding: 18px; border-radius: 16px; border: none; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
         .btn-yes { background: var(--main); color: #fff; }
         .btn-no { background: #e5e5ea; color: #000; }
+        
+        /* 結果表示 */
         .res-label { font-size: 0.9rem; color: #888; margin-bottom: 10px; }
         .res-name { font-size: 1.8rem; font-weight: 900; color: var(--main); margin-bottom: 20px; text-align: center; }
-        .res-desc { background: #f8f9fa; padding: 20px; border-radius: 12px; line-height: 1.6; margin-bottom: 30px; width: 100%; max-width: 400px; }
+        .res-desc { background: #f8f9fa; padding: 20px; border-radius: 12px; line-height: 1.6; margin-bottom: 20px; width: 100%; max-width: 400px; }
+
+        /* 復活：シェアボタンのスタイル */
+        .share-btn {
+            background: #000; color: #fff; border: none; width: 100%; max-width: 300px;
+            padding: 14px; border-radius: 30px; font-size: 1rem; font-weight: bold; cursor: pointer;
+            margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
     </style>
 </head>
 <body>
@@ -127,45 +133,22 @@
         <div class="res-label">あなたの診断結果は…</div>
         <div class="res-name" id="res-name">結果</div>
         <div class="res-desc" id="res-desc">解説</div>
-        <button class="btn btn-yes" style="border-radius:30px;" onclick="location.reload()">トップに戻る</button>
+        
+        <button class="share-btn" onclick="shareX()">
+            𝕏 で結果をシェアする
+        </button>
+
+        <button class="btn btn-yes" style="border-radius:30px; width: 100%; max-width: 300px; background: #e5e5ea; color: #000;" onclick="location.reload()">トップに戻る</button>
     </div>
 
     <script>
         function agreeTerms() { document.getElementById('terms-overlay').style.display = 'none'; }
 
         const db = {
-            love: {
-                qs: ["自分から話しかけるのは得意？", "人の変化にすぐ気づく？", "多趣味なほうだ？", "聞き上手だと言われる？", "一人より誰かといたい？", "初対面でも緊張しない？", "連絡はマメに返す？", "身だしなみには気を使う？", "ポジティブな方だ？", "約束は必ず守る？"],
-                results: [
-                    { n: "【推定3人】じっくり愛される派", d: "誠実な魅力で、特定の人から深く愛されるタイプです。" },
-                    { n: "【推定15人】かなりのモテ素質", d: "自然体で周囲を明るくする力があります。実は狙っている人が多いかも。" },
-                    { n: "【推定50人以上】伝説のモテ体質", d: "圧倒的なカリスマ性。一生告白が絶えないでしょう。" }
-                ]
-            },
-            zense: {
-                qs: ["冒険が好き？", "直感を信じる？", "歴史に興味がある？", "自由でいたい？", "冷静な方？", "一人が好き？", "自然が好き？", "表現することが好き？", "正義感が強い？", "海より山派？"],
-                results: [
-                    { n: "平安貴族", d: "雅な感性を持つあなた。前世では静かに和歌を詠んでいたようです。" },
-                    { n: "戦国武将", d: "強い意志の持ち主。前世では多くの仲間を率いて戦っていました。" },
-                    { n: "異国の旅人", d: "自由な魂。前世では国境を越え、未知の景色を求めていました。" }
-                ]
-            },
-            tsun: {
-                qs: ["本音と逆を言う？", "照れ隠しをする？", "実は甘えたい？", "素直になるのが怖い？", "ギャップがある？", "寂しがり屋？", "口調が強くなる？", "世話焼き？", "秘密が多い？", "涙もろい？"],
-                results: [
-                    { n: "ピュア度100%", d: "ツン要素なし。裏表のない性格が周囲を癒やしています。" },
-                    { n: "黄金比ツンデレ", d: "ツンとデレのバランスが神。相手を虜にする天才です。" },
-                    { n: "孤高のツン", d: "簡単には心を開きません。その壁を壊したいというファンがいます。" }
-                ]
-            },
-            psycho: {
-                qs: ["冷静に判断できる？", "嘘がバレない自信がある？", "スリルが好き？", "他人の目は気にしない？", "効率が最優先？", "一人が落ち着く？", "自分は特別だと思う？", "ルールに縛られたくない？", "過去は振り返らない？", "合理性がすべて？"],
-                results: [
-                    { n: "【10%】聖人君子", d: "非常に高い共感力を持っています。他人の痛みがわかる優しい人です。" },
-                    { n: "【50%】一般市民", d: "常識的な感覚を持ちつつ、必要なときは冷静になれる適応者です。" },
-                    { n: "【95%】完成されたサイコパス", d: "感情に左右されない鋼のメンタル。成功者に多いカリスマタイプです。" }
-                ]
-            }
+            love: { title: "一生で何人に告白されるか診断", qs: ["自分から話しかけるのは得意？", "人の変化にすぐ気づく？", "多趣味なほうだ？", "聞き上手だと言われる？", "一人より誰かといたい？", "初対面でも緊張しない？", "連絡はマメに返す？", "身だしなみには気を使う？", "ポジティブな方だ？", "約束は必ず守る？"], results: [{ n: "【推定3人】じっくり愛される派", d: "誠実な魅力で、特定の人から深く愛されるタイプです。" }, { n: "【推定15人】かなりのモテ素質", d: "自然体で周囲を明るくする力があります。実は狙っている人が多いかも。" }, { n: "【推定50人以上】伝説のモテ体質", d: "圧倒的なカリスマ性。一生告白が絶えないでしょう。" }] },
+            zense: { title: "前世タイプ診断", qs: ["冒険好き？", "直感を信じる？", "歴史に興味がある？", "自由でいたい？", "冷静な方？", "一人が好き？", "自然が好き？", "表現することが好き？", "正義感が強い？", "海より山派？"], results: [{ n: "平安貴族", d: "雅な感性を持つあなた。前世では静かに和歌を詠んでいたようです。" }, { n: "戦国武将", d: "強い意志の持ち主。前世では多くの仲間を率いて戦っていました。" }, { n: "異国の旅人", d: "自由な魂。前世では国境を越え、未知の景色を求めていました。" }] },
+            tsun: { title: "ツンデレ比率診断", qs: ["本音と逆を言う？", "照れ隠しをする？", "実は甘えたい？", "素直になるのが怖い？", "ギャップがある？", "寂しがり屋？", "口調が強くなる？", "世話焼き？", "秘密が多い？", "涙もろい？"], results: [{ n: "ピュア度100%", d: "ツン要素なし。裏表のない性格が周囲を癒やしています。" }, { n: "黄金比ツンデレ", d: "ツンとデレのバランスが神。相手を虜にする天才です。" }, { n: "孤高のツン", d: "簡単には心を開きません。その壁を壊したいというファンがいます。" }] },
+            psycho: { title: "サイコパス度診断", qs: ["冷静に判断できる？", "嘘がバレない自信がある？", "スリルが好き？", "他人の目は気にしない？", "効率が最優先？", "一人が落ち着く？", "自分は特別だと思う？", "ルールは破るためにある？", "後悔はほとんどしない？", "合理性がすべて？"], results: [{ n: "【10%】天使すぎる善人", d: "非常に高い共感力を持っています。他人の痛みがわかる優しい人です。" }, { n: "【50%】一般市民", d: "常識的な感覚を持ちつつ、必要なときは冷静になれる適応者です。" }, { n: "【95%】完成されたサイコパス", d: "感情に左右されない鋼のメンタル。成功者に多いカリスマタイプです。" }] }
         };
 
         let mode = "", step = 0, score = 0;
@@ -179,6 +162,15 @@
             let result = db[mode].results[resIdx];
             document.getElementById('res-name').innerText = result.n;
             document.getElementById('res-desc').innerText = result.d;
+        }
+
+        // 復活：シェア機能
+        function shareX() {
+            const resultName = document.getElementById('res-name').innerText;
+            const quizTitle = db[mode].title;
+            const text = `${quizTitle}の結果は…\n${resultName}でした！\n\n#DiagLab #診断`;
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`, '_blank');
         }
     </script>
 </body>
