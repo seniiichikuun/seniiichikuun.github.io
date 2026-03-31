@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Diag.Lab - あなたの将来のモテ期や前世をAIが精密診断。SNSで話題の恋愛診断ポータルサイト。">
-    <title>Diag.Lab | 究極の診断ポータル</title>
+    
+    <meta name="msvalidate.01" content="ACE554E26021F4A982DFC1F9F2FC2B19" />
+
+    <title>Diag.Lab | 究極の精密診断ポータル</title>
+    <meta name="description" content="Diag.Lab（ダイアグラボ）は、AI技術を駆使した精密診断サイトです。一生で何人に告白されるか、あなたの前世や性格比率など、SNSで話題の診断コンテンツを無料で楽しめます。">
+    <meta name="keywords" content="診断, 恋愛診断, 告白, 前世診断, 精密診断, DiagLab, ダイアグラボ">
+    <meta property="og:title" content="Diag.Lab | 究極の精密診断ポータル">
+    <meta property="og:description" content="あなたの運命を可視化。国内最大級の診断サイトを目指すDiag.Labで今すぐチェック！">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://diag-lab.github.io/">
+    <meta property="og:site_name" content="Diag.Lab">
+
     <style>
         :root { --main: #007aff; --bg: #fdf2f5; --hot-pink: #ff4778; } 
         body { margin: 0; padding: 0; background: var(--bg); color: #1c1c1e; font-family: sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -12,27 +22,26 @@
         /* 利用規約のオーバーレイ（全画面） */
         #terms-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 1000;
+            background: rgba(0,0,0,0.85); z-index: 1000;
             display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;
         }
         .terms-card {
-            background: #fff; border-radius: 20px; padding: 25px; width: 100%; max-width: 400px; text-align: center;
+            background: #fff; border-radius: 24px; padding: 30px; width: 100%; max-width: 400px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .terms-card h3 { color: var(--main); margin-top: 0; }
+        .terms-card h3 { color: var(--main); margin-top: 0; font-size: 1.4rem; }
         .terms-box {
-            text-align: left; font-size: 0.8rem; color: #666; height: 150px; overflow-y: auto;
-            border: 1px solid #eee; padding: 10px; margin: 15px 0; border-radius: 10px; line-height: 1.6;
+            text-align: left; font-size: 0.8rem; color: #666; height: 160px; overflow-y: auto;
+            border: 1px solid #eee; padding: 15px; margin: 20px 0; border-radius: 12px; line-height: 1.6;
+            background: #fafafa;
         }
-        .agree-btn {
-            background: var(--main); color: #fff; border: none; padding: 15px 30px;
-            border-radius: 30px; font-weight: bold; font-size: 1rem; width: 100%; cursor: pointer;
-        }
+        .agree-btn { background: var(--main); color: #fff; border: none; padding: 16px 30px; border-radius: 50px; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; }
 
-        /* ヘッダー：維持 */
+        /* デザイン維持：青ヘッダー */
         header { background: var(--main); padding: 15px; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 10; }
         .logo { font-size: 1.5rem; font-weight: 900; color: #fff; }
         
-        /* 紹介文：維持（青文字・背景なし） */
+        /* デザイン維持：青文字・背景なし */
         .intro-box { background: transparent; padding: 25px 20px 10px; text-align: center; }
         .intro-text { font-size: 0.9rem; color: var(--main); line-height: 1.7; max-width: 420px; margin: 0 auto; text-align: left; }
 
@@ -42,12 +51,13 @@
         .card { background: #fff; border-radius: 16px; margin-bottom: 16px; display: flex; align-items: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
         .card-img { width: 90px; height: 90px; object-fit: cover; flex-shrink: 0; border-right: 1px solid #eee; }
         .info { flex: 1; padding: 10px; }
-        .info h2 { margin: 0; font-size: 1rem; font-weight: bold; }
+        .info h1 { margin: 0; font-size: 1rem; font-weight: bold; }
         .info p { margin: 4px 0 0; font-size: 0.75rem; color: #8e8e93; }
         
-        /* SNS話題ラベル：維持（ピンク赤） */
+        /* デザイン維持：ピンク赤ラベル */
         .hot { display: inline-block; background: var(--hot-pink); color: #fff; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; margin-top: 5px; font-weight: bold; }
 
+        /* 診断画面・結果画面 */
         #quiz-ui { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 100; flex-direction: column; padding: 20px; box-sizing: border-box; }
         .progress { color: var(--main); font-weight: bold; text-align: center; margin-top: 20px; }
         .q-text { font-size: 1.3rem; font-weight: 800; text-align: center; flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -67,15 +77,13 @@
 
 <div id="terms-overlay">
     <div class="terms-card">
-        <h3>Diag.Labへようこそ</h3>
-        <p style="font-size: 0.8rem; color: #333;">ご利用前に必ずご確認ください</p>
+        <h3>Diag.Lab 安心宣言</h3>
         <div class="terms-box">
             【利用規約】<br>
-            1. 当サイトの診断結果は遊びを目的としたものであり、将来を保証するものではありません。<br>
-            2. サイトの利用により生じたトラブルについて、運営者は一切の責任を負いません。<br><br>
-            【プライバシーポリシー】<br>
-            1. 入力された診断データは一切保存されません。<br>
-            2. 解析ツール（カウンター等）はサービスの改善目的でのみ使用します。
+            ・本サイトの診断はエンターテインメント用であり、科学的根拠を保証するものではありません。<br>
+            ・結果による損害について運営者は責任を負いかねます。<br><br>
+            【プライバシー保護】<br>
+            ・診断時に入力されたデータは、あなたの端末内でのみ処理され、サーバーに保存されることはありません。
         </div>
         <button class="agree-btn" onclick="agreeTerms()">同意して診断をはじめる</button>
     </div>
@@ -84,9 +92,11 @@
 <header><div class="logo">Diag.Lab</div></header>
 
 <div class="intro-box">
-    <p class="intro-text">
-        国内最大級の精密診断サイトを目指すDiag.Labへようこそ。いろいろな質問で、あなたの未来やルーツを詳細に分析します。
-    </p>
+    <section>
+        <p class="intro-text">
+            国内最大級の精密診断サイトを目指すDiag.Lab（ダイアグラボ）へようこそ。いろいろな質問で、あなたの未来やルーツを詳細に分析します。
+        </p>
+    </section>
 </div>
 
 <div class="counter-section">
@@ -95,28 +105,30 @@
 </div>
 
 <div class="container">
-    <div class="card" onclick="startQuiz('love')">
-        <img src="1774857935465~2.png" alt="告白" class="card-img">
+    <article class="card" onclick="startQuiz('love')">
+        <img src="1774857935465~2.png" alt="一生で何人に告白されるか診断" class="card-img">
         <div class="info">
-            <h2>一生で何人に告白されるか診断</h2>
+            <h1>一生で何人に告白されるか診断</h1>
             <p>あなたの潜在的な魅力を数値化。未来のモテ期を予言します。</p>
             <span class="hot">SNSで話題 🔥</span>
         </div>
-    </div>
-    <div class="card" onclick="startQuiz('zense')">
-        <img src="1774787133599.png" alt="前世" class="card-img">
+    </article>
+
+    <article class="card" onclick="startQuiz('zense')">
+        <img src="1774787133599.png" alt="前世タイプ診断" class="card-img">
         <div class="info">
-            <h2>前世タイプ診断</h2>
+            <h1>前世タイプ診断</h1>
             <p>10の質問で魂の記憶を呼び覚まします。</p>
         </div>
-    </div>
-    <div class="card" onclick="startQuiz('tsun')">
-        <img src="1774787085699.png" alt="ツンデレ" class="card-img">
+    </article>
+
+    <article class="card" onclick="startQuiz('tsun')">
+        <img src="1774787085699.png" alt="ツンデレ比率診断" class="card-img">
         <div class="info">
-            <h2>ツンデレ比率診断</h2>
+            <h1>ツンデレ比率診断</h1>
             <p>隠れた本心をAIが精密に可視化。</p>
         </div>
-    </div>
+    </article>
 </div>
 
 <div id="quiz-ui">
@@ -133,7 +145,6 @@
         <div class="res-name" id="res-name">結果</div>
         <div class="res-desc" id="res-desc">解説</div>
         <button id="share-btn" class="btn btn-share">𝕏 で結果をシェアする</button>
-        <div class="ad-space">【PR】理想のパートナー診断はこちら</div>
         <button class="btn btn-no" style="margin-top:20px;" onclick="location.reload()">トップに戻る</button>
     </div>
 </div>
@@ -143,11 +154,7 @@
 </footer>
 
 <script>
-// 同意ボタンの動作
-function agreeTerms() {
-    document.getElementById('terms-overlay').style.display = 'none';
-}
-
+function agreeTerms() { document.getElementById('terms-overlay').style.display = 'none'; }
 const db = {
     love: {
         title: "一生で何人に告白されるか診断",
@@ -187,4 +194,3 @@ function showResult() {
 </script>
 </body>
 </html>
-
