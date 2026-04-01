@@ -111,7 +111,7 @@
     <div class="res-name" id="res-name">結果</div>
     <div class="res-desc" id="res-desc">解説</div>
     <button class="share-btn" onclick="shareX()">𝕏 で結果をシェアする</button>
-    <button class="btn btn-yes" style="border-radius:30px; width: 100%; max-width: 300px;" onclick="location.reload()">TOPに戻る</button>
+ <button class="btn btn-yes" style="border-radius:30px; width: 100%; max-width: 300px;" onclick="backToTop()">TOPに戻る</button>
 </div>
 
 <script>
@@ -144,6 +144,11 @@
         const text = `『${quizTitle}』の結果は…\n【 ${resultName} 】でした！\n\n診断はこちらから↓\n${siteUrl}`;
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
     }
+    function backToTop() {
+        document.getElementById('result-ui').style.display = 'none';
+        window.scrollTo(0, 0);
+    }
+
 </script>
 </body>
 </html>
