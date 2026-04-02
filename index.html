@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="https://diag-lab.github.io/1775003335959~2.png">
     <link rel="apple-touch-icon" href="https://diag-lab.github.io/1775003335959~2.png">
     <meta property="og:title" content="Diag.Lab | 究極 of 精密診断">
-    <meta property="og:description" content="あなたの潜在能力を精密分析。一生で何人に告白される？">
+    <meta property="og:description" content="あなたの潜在能力を精密分析。4択でより深く。">
     <meta property="og:image" content="https://diag-lab.github.io/1775003335959~2.png">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -16,7 +16,6 @@
         :root { --main: #007aff; --header-bg: #002b5c; --bg: #f2f2f7; }
         body { margin: 0; padding: 0; background: var(--bg); font-family: -apple-system, sans-serif; }
         
-        /* 規約ポップアップ */
         #terms-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 20px; box-sizing: border-box; }
         .terms-card { background: #fff; width: 100%; max-width: 450px; max-height: 85vh; border-radius: 24px; padding: 30px; text-align: center; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .terms-box { text-align: left; font-size: 0.85rem; color: #555; background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0; overflow-y: auto; line-height: 1.8; border: 1px solid #eee; }
@@ -24,7 +23,6 @@
 
         header { background: var(--header-bg); color: #fff; padding: 20px; text-align: center; }
         .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; }
-        .counter-area { text-align: center; padding: 10px; background: #eef2f7; font-size: 0.85rem; color: #555; border-bottom: 1px solid #ddd; }
         .intro-box { background: #fff; padding: 20px; margin: 16px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center; }
         .container { padding: 0 16px 40px; max-width: 500px; margin: 0 auto; }
         
@@ -34,16 +32,17 @@
         .info h1 { margin: 0; font-size: 1rem; font-weight: bold; }
         .info p { margin: 4px 0 0; font-size: 0.75rem; color: #8e8e93; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        #quiz-ui, #result-ui { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; flex-direction: column; align-items: center; z-index: 999; padding: 60px 20px; box-sizing: border-box; }
-        .progress { color: var(--main); font-weight: bold; margin-bottom: 20px; }
-        .q-text { font-size: 1.4rem; font-weight: 800; text-align: center; margin-bottom: 40px; }
-        .btns { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 300px; }
-        .btn { padding: 18px; border-radius: 16px; border: none; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
-        .btn-yes { background: var(--main); color: #fff; }
-        .btn-no { background: #e5e5ea; color: #000; }
+        #quiz-ui, #result-ui { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; flex-direction: column; align-items: center; z-index: 999; padding: 60px 20px; box-sizing: border-box; overflow-y: auto; }
+        .progress { color: var(--main); font-weight: bold; margin-bottom: 10px; }
+        .q-text { font-size: 1.3rem; font-weight: 800; text-align: center; margin-bottom: 30px; line-height: 1.4; }
+        .btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 350px; }
+        .btn { padding: 16px; border-radius: 12px; border: 1.5px solid #e5e5ea; font-size: 1rem; font-weight: bold; cursor: pointer; text-align: left; background: #fff; transition: 0.2s; }
+        .btn:active { background: #f2f2f7; transform: scale(0.98); }
+        .btn-main { background: var(--main); color: #fff; border: none; text-align: center; margin-top: 10px; }
+
         .res-label { font-size: 0.9rem; color: #888; margin-bottom: 10px; }
-        .res-name { font-size: 1.8rem; font-weight: 900; color: var(--main); margin-bottom: 20px; }
-        .res-desc { background: #f8f9fa; padding: 20px; border-radius: 12px; line-height: 1.6; margin-bottom: 20px; }
+        .res-name { font-size: 1.8rem; font-weight: 900; color: var(--main); margin-bottom: 20px; text-align: center; }
+        .res-desc { background: #f8f9fa; padding: 20px; border-radius: 12px; line-height: 1.6; margin-bottom: 20px; width: 100%; max-width: 350px; }
         .share-btn { background: #000; color: #fff; border: none; width: 100%; max-width: 300px; padding: 14px; border-radius: 30px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
     </style>
 </head>
@@ -53,102 +52,120 @@
     <div class="terms-card">
         <h2>利用規約</h2>
         <div class="terms-box">
-            <h3>第1条（規約の適用）</h3><p>本規約は、Diag.Labが提供する全ての診断コンテンツの利用条件を定めるものです。</p>
-            <h3>第2条（サービスの性質）</h3><p>提供される診断結果はエンターテインメント目的の推測であり、医学的・科学的根拠を保証するものではありません。</p>
-            <h3>第3条（禁止事項）</h3><p>当サイトの運営を妨げる行為、サーバーへの過度な負荷をかける行為を禁止します。</p>
-            <h3>第4条（免責事項）</h3><p>当サイトの利用により生じたあらゆる損害について、運営は一切の責任を負いません。</p>
-            <h3>第5条（プライバシー）</h3><p>入力された回答データは保存されません。</p>
-             <h3>第6条（広告について）</h3><p>当サイトは、スポンサー広告や提携サービスの案内を掲載する場合があります。あらかじめご了承ください。</p>
+            <p>当サイトの診断結果はエンタメ目的であり、科学的根拠を保証するものではありません。同意して開始してください。</p>
         </div>
-        <button class="agree-btn" onclick="agreeTerms()">内容に同意して開始</button>
+        <button class="agree-btn" onclick="agreeTerms()">同意して開始</button>
     </div>
 </div>
 
 <header><div class="logo">Diag.Lab</div></header>
 
 <div class="intro-box">
-    <p class="intro-text">国内最大級の精密診断サイトを目指すDiag.Labへようこそ。<br>あなたの未来やルーツを詳細に分析します。</p>
+    <p>精密な4択分析で、あなたの深層心理を解き明かします。</p>
 </div>
 
 <div class="container">
     <article class="card" onclick="startQuiz('love')">
         <img src="1774857935465~2.png" class="card-img">
-        <div class="info"><h1>一生で何人に告白されるか診断</h1><p>あなたの潜在的な魅力を数値化。未来のモテ期を予言します。</p></div>
+        <div class="info"><h1>一生で何人に告白されるか</h1><p>モテの潜在能力を精密分析。</p></div>
     </article>
     <article class="card" onclick="startQuiz('zense')">
         <img src="1774787133599.png" class="card-img">
-        <div class="info"><h1>前世タイプ診断</h1><p>10の質問で魂の記憶を呼び覚まします。</p></div>
+        <div class="info"><h1>前世タイプ診断</h1><p>魂の記憶を呼び覚まします。</p></div>
     </article>
     <article class="card" onclick="startQuiz('tsun')">
         <img src="1774787085699.png" class="card-img">
-        <div class="info"><h1>ツンデレ比率診断</h1><p>隠れた本心をAIが精密に可視化。</p></div>
+        <div class="info"><h1>ツンデレ比率診断</h1><p>隠れた本心を可視化します。</p></div>
     </article>
     <article class="card" onclick="startQuiz('psycho')">
         <img src="1774964475999.png" class="card-img">
-        <div class="info"><h1>サイコパス度診断</h1><p>合理的な思考の裏に隠された冷徹さを暴きます。</p></div>
+        <div class="info"><h1>サイコパス度診断</h1><p>冷徹な合理性を暴きます。</p></div>
     </article>
     <article class="card" onclick="startQuiz('sports')">
-    <img src="1775035912224.png" class="card-img">
-    <div class="info">
-        <h1>あなたに向いてるスポーツ診断</h1>
-        <p>性格や適性から、あなたが一番輝ける競技を分析します。</p>
-    </div>
-</article>
-
+        <img src="1775035912224.png" class="card-img">
+        <div class="info"><h1>向いてるスポーツ診断</h1><p>最高の適性競技を見つけます。</p></div>
+    </article>
+    <article class="card" onclick="startQuiz('mental')">
+        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=mental" class="card-img">
+        <div class="info"><h1>精神年齢診断</h1><p>あなたの魂は何歳？</p></div>
+    </article>
 </div>
 
 <div id="quiz-ui">
-    <div class="progress" id="p-count">Q.1 / 10</div>
+    <div class="progress" id="p-count">Q.1 / 5</div>
     <div class="q-text" id="q-text">質問</div>
-    <div class="btns">
-        <button class="btn btn-yes" onclick="handleAnswer(true)">はい</button>
-        <button class="btn btn-no" onclick="handleAnswer(false)">いいえ</button>
-    </div>
+    <div class="btns" id="ans-list"></div>
 </div>
 
 <div id="result-ui">
-    <div class="res-label">あなたの診断結果は…</div>
-    <div class="res-name" id="res-name">結果</div>
-    <div class="res-desc" id="res-desc">解説</div>
-    <button class="share-btn" onclick="shareX()">𝕏 で結果をシェアする</button>
- <button class="btn btn-yes" style="border-radius:30px; width: 100%; max-width: 300px;" onclick="backToTop()">TOPに戻る</button>
+    <div class="res-label">診断結果</div>
+    <div class="res-name" id="res-name"></div>
+    <div class="res-desc" id="res-desc"></div>
+    <button class="share-btn" onclick="shareX()">𝕏 でシェア</button>
+    <button class="btn btn-main" style="width:100%; max-width:300px; border-radius:30px;" onclick="backToTop()">TOPへ</button>
 </div>
 
 <script>
     function agreeTerms() { document.getElementById('terms-overlay').style.display = 'none'; }
+    
     const db = {
-        love: { title: "一生で何人に告白されるか診断", qs: ["自分から話しかけるのは得意？", "人の変化にすぐ気づく？", "一人の時間は絶対に必要？", "初対面で緊張しない？", "聞き上手だと言われる？", "約束は絶対守る派？", "直感で動くことが多い？", "映画を見てよく泣く？", "人前に出るのが好き？", "実はかなり頑固だ？"], results: [{n:"100人以上", d:"圧倒的な魅力の持ち主。歩くパワースポットです。"}, {n:"15人", d:"安定した人気があります。誠実さが鍵。"}, {n:"2人", d:"量より質。運命の一人と深く結ばれるタイプ。"}] },
-        zense: { title: "前世タイプ診断", qs: ["冒険好き？", "直感を信じる？", "歴史に興味がある？", "海より山派？", "夜型人間？", "動物が好き？", "空想をよくする？", "リーダー気質？", "手先が器用？", "静かな場所が好き？"], results: [{n:"伝説の勇者", d:"かつて世界を救った魂。今世でも正義感が強い。"}, {n:"異国の商人", d:"交渉術に長けた魂。今世でも商才があります。"}, {n:"森の賢者", d:"知恵深い魂。周囲に癒やしを与えます。"}] },
-        tsun: { title: "ツンデレ比率診断", qs: ["本音と逆を言う？", "照れ隠しをする？", "実は甘えたい？", "素直になりたい？", "冷たくしちゃう？", "本当は優しい？", "ギャップがある？", "独占欲が強い？", "嫉妬深い？", "ツンツンしちゃう？"], results: [{n:"黄金比ツンデレ", d:"完璧なツンとデレのバランス。中毒性があります。"}, {n:"ほぼデレ", d:"隠せていません。可愛さが溢れ出ています。"}, {n:"鋼鉄のツン", d:"デレが見つかりません。もっと素直に！"}] },
-        psycho: { title: "サイコパス度診断", qs: ["冷静に判断できる？", "嘘がバレない自信がある？", "スリルが好き？", "他人の目は気にしない？", "合理的だとよく言われる？", "感情に流されない？", "口が達者な方だ？", "反省はあまりしない？", "退屈しやすい？", "目的のためなら手段を選ばない？"], results: [{n:"一般人", d:"至って普通です。温かい心を持っています。"}, {n:"予備軍", d:"少し冷徹な面が。仕事では成功するかも。"}, {n:"真のサイコパス", d:"感情の波がありません。カリスマ性の塊。"}] },
-    sports: {　title: "あなたに向いてるスポーツ診断",qs: ["チームで協力する方が好き？", "体力には自信がある？", "戦略を考えるのが好き？", "手先は器用な方だと思う？", "負けず嫌いな性格？", "走ることは苦じゃない？", "道具を使う競技に興味がある？", "集中力は高い方？", "リズム感はいい方だと思う？", "短時間で全力を出し切りたい？"],results: [{n:"サッカー・バスケ", d:"チームの絆で勝利を掴む、エネルギッシュなあなたにぴったり！"},{n:"テニス・バドミントン", d:"戦略とスピードを兼ね備えた、知性派アスリートタイプです！"},{n:"弓道・ゴルフ・水泳", d:"自分自身と向き合い、限界を超える個人競技で才能が開花します！"}]}
+        love: { title: "告白される人数診断", qs: [
+            {t:"初対面の人と話すときは？", a:[{x:"自分からガンガン話す",s:3},{x:"相手に合わせて話す",s:2},{x:"聞かれたら話す",s:1},{x:"できれば話したくない",s:0}]},
+            {t:"友人の髪型の変化に...", a:[{x:"即座に気づいて褒める",s:3},{x:"気づくが言わない",s:2},{x:"言われてから気づく",s:1},{x:"全く気づかない",s:0}]}
+        ], results:[{n:"100人以上", d:"歩くパワースポット級の魅力！"},{n:"20人前後", d:"安定した人気があります。"},{n:"数人", d:"深く愛されるタイプです。"}] },
+        
+        zense: { title: "前世タイプ診断", qs: [
+            {t:"休日の過ごし方は？", a:[{x:"知らない場所へ冒険",s:3},{x:"歴史ある場所を散策",s:2},{x:"家で静かに読書",s:1},{x:"賑やかな場所で遊ぶ",s:0}]},
+            {t:"困っている人がいたら？", a:[{x:"迷わず手を貸す",s:3},{x:"様子を見てから動く",s:2},{x:"誰か呼んでくる",s:1},{x:"気づかないフリ",s:0}]}
+        ], results:[{n:"伝説の勇者", d:"正義感あふれる魂。"},{n:"異国の商人", d:"知恵と勇気の魂。"},{n:"森の賢者", d:"静かな癒やしの魂。"}] },
 
+        tsun: { title: "ツンデレ比率診断", qs: [
+            {t:"好きな人の前では？", a:[{x:"素直になれない",s:3},{x:"少し照れてしまう",s:2},{x:"いつも通り",s:1},{x:"積極的に甘える",s:0}]},
+            {t:"プレゼントをもらったら？", a:[{x:"「別に欲しくないし」と言う",s:3},{x:"顔を赤くして喜ぶ",s:2},{x:"普通に感謝する",s:1},{x:"抱きついて喜ぶ",s:0}]}
+        ], results:[{n:"鋼鉄のツン", d:"デレが見当たりません。"},{n:"黄金比ツンデレ", d:"完璧なバランスです。"},{n:"ほぼデレ", d:"隠しきれていません。"}] },
+
+        psycho: { title: "サイコパス度診断", qs: [
+            {t:"大事な決断をするときは？", a:[{x:"完全に利益だけで選ぶ",s:3},{x:"効率を重視する",s:2},{x:"感情も考慮する",s:1},{x:"直感で選ぶ",s:0}]},
+            {t:"嘘をつくことに抵抗は？", a:[{x:"全くない。むしろ得意",s:3},{x:"必要ならつく",s:2},{x:"あまりつきたくない",s:1},{x:"罪悪感で無理",s:0}]}
+        ], results:[{n:"真のサイコパス", d:"カリスマ的冷徹さ。"},{n:"予備軍", d:"少しドライな面が。"},{n:"一般人", d:"温かい心の持ち主。"}] },
+
+        sports: { title: "向いてるスポーツ診断", qs: [
+            {t:"運動に求めるものは？", a:[{x:"チームでの絆",s:3},{x:"1対1の駆け引き",s:2},{x:"自己記録の更新",s:1},{x:"楽しければOK",s:0}]},
+            {t:"試合でのメンタルは？", a:[{x:"追い込まれるほど燃える",s:3},{x:"冷静に分析する",s:2},{x:"緊張してしまう",s:1},{x:"マイペースにやる",s:0}]}
+        ], results:[{n:"団体競技(サッカー等)", d:"絆を重んじるあなたに。"},{n:"ネット型(テニス等)", d:"戦略家なあなたに。"},{n:"個人競技(弓道等)", d:"集中力が武器のあなたに。"}] },
+
+        mental: { title: "精神年齢診断", qs: [
+            {t:"面倒な事を頼まれたら？", a:[{x:"「ムリ」と即答する",s:3},{x:"忙しいフリで回避",s:2},{x:"仕方なくやる",s:1},{x:"笑顔で引き受ける",s:0}]},
+            {t:"お菓子売り場を見ると？", a:[{x:"今でもワクワクする",s:0},{x:"つい見てしまう",s:1},{x:"何も感じない",s:2},{x:"「最近のは高いな」と思う",s:3}]}
+        ], results:[{n:"精神年齢：80歳", d:"悟りを開いた賢者。"},{n:"精神年齢：25歳", d:"バランスの良い大人。"},{n:"精神年齢：5歳", d:"純粋なクリエイター。"}] }
     };
 
     let mode = "", step = 0, score = 0;
     function startQuiz(t) { mode = t; step = 0; score = 0; document.getElementById('quiz-ui').style.display = 'flex'; showNext(); }
-    function showNext() { document.getElementById('p-count').innerText = `Q.${step + 1} / 10`; document.getElementById('q-text').innerText = db[mode].qs[step]; }
-    function handleAnswer(ans) { if(ans) score++; step++; if(step < 10) showNext(); else showResult(); }
+    function showNext() { 
+        const q = db[mode].qs[step];
+        document.getElementById('p-count').innerText = `Q.${step + 1} / ${db[mode].qs.length}`; 
+        document.getElementById('q-text').innerText = q.t; 
+        const list = document.getElementById('ans-list'); list.innerHTML = "";
+        q.a.forEach(ans => {
+            const b = document.createElement('button'); b.className = "btn"; b.innerText = ans.x;
+            b.onclick = () => { score += ans.s; step++; if(step < db[mode].qs.length) showNext(); else showResult(); };
+            list.appendChild(b);
+        });
+    }
     function showResult() {
         document.getElementById('quiz-ui').style.display = 'none';
         document.getElementById('result-ui').style.display = 'flex';
-        let resIdx = score >= 8 ? 0 : (score >= 4 ? 1 : 2);
+        let resIdx = score >= 5 ? 0 : (score >= 3 ? 1 : 2);
         let result = db[mode].results[resIdx];
         document.getElementById('res-name').innerText = result.n;
         document.getElementById('res-desc').innerText = result.d;
     }
     function shareX() {
-        const resultName = document.getElementById('res-name').innerText;
-        const quizTitle = db[mode].title;
-        const siteUrl = window.location.href;
-        const text = `『${quizTitle}』の結果は…\n【 ${resultName} 】でした！\n\n診断はこちらから↓\n${siteUrl}`;
+        const text = `『${db[mode].title}』の結果は…\n【 ${document.getElementById('res-name').innerText} 】でした！\n#DiagLab\n${window.location.href}`;
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
     }
-    function backToTop() {
-        document.getElementById('result-ui').style.display = 'none';
-        window.scrollTo(0, 0);
-    }
-
+    function backToTop() { document.getElementById('result-ui').style.display = 'none'; window.scrollTo(0,0); }
 </script>
 </body>
 </html>
